@@ -25,7 +25,6 @@ jobs:
       - name: Install and build
         run: |
           npm install
-          npm run update
           npm run build-for-deploy
 
       - name: Deploy 🚀
