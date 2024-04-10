@@ -1,0 +1,39 @@
+.wrapper {
+  width: 1200px;
+  margin: 0px auto;
+  text-align: center;
+}
+
+.answer-container.header {
+  .card {
+    border: 0 !important;
+    box-shadow: none !important;
+    text-align: center;
+    line-height: 65px;
+  }
+}
+
+.answer-container {
+  display: flex;
+  width: 100%;
+  height: 65px;
+  font-size: 11px;
+  justify-content: center;
+  .card {
+    width: 65px;
+    height: 65px;
+    box-shadow: inset 0 0 5px black;
+    border: 1px solid #979797;
+    position: relative;
+
+    span {
+      position: relative;
+      float: left;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      line-break: anywhere;
+      word-spacing: 100px;
+    }
+  }
+}
