@@ -32,6 +32,6 @@ jobs:
         with:
           ssh-key: true
           branch: main
-          folder: dist/lol-champion-guesser
+          folder: dist/lol-champion-guesser/browser
           repository-name: Kerrders/kerrders.github.io
           target-folder: lol-champion-guesser
