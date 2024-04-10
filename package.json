@@ -6,7 +6,8 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "build-for-deploy": "ng build --base-href https://kerrders.github.io/lolchampionguesser/"
   },
   "private": true,
   "dependencies": {
