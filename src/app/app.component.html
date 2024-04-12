@@ -1,80 +1,81 @@
 <div class="wrapper">
   <div class="grid grid-nogutter">
     <div class="col-12">
-      <div *ngIf="gameWon" class="mb-3">
+      @if (gameWon) {
+      <div class="mb-3">
         <p-card>
           <p-button (click)="restartGame()" label="Restart Game"></p-button>
         </p-card>
       </div>
+      }
       <p-card>
-        <div *ngIf="!currentChampion">
-          <p-button (click)="startGame()" label="Start Game"></p-button>
-        </div>
-
-        <div *ngIf="currentChampion">
-          <div class="card flex justify-content-center" *ngIf="!gameWon">
-            <p-dropdown
-              [options]="userSelectableChampions"
-              [ngModel]="userChampionInput()"
-              (ngModelChange)="userChampionInput.set($event)"
-              optionLabel="name"
-              [filter]="true"
-              filterBy="name"
-              [showClear]="true"
-              placeholder="Select a Champion"
-            >
-              <ng-template let-champion pTemplate="item">
-                <div class="flex align-items-center gap-2">
-                  <img
-                    [src]="championService.imageUrlPrefix + champion.image.full"
-                    [alt]="champion.name"
-                    [class]="'mr-2'"
-                    style="width: 20px"
-                  />
-                  <div>{{ champion.name }}</div>
-                </div>
-              </ng-template>
-            </p-dropdown>
-          </div>
-
-          <div
-            class="answer-container header"
-            *ngIf="userIncorrectChampions.length"
+        @if (!currentChampion) {
+        <p-button (click)="startGame()" label="Start Game"></p-button>
+        } @if (currentChampion) {
+        <div class="card flex justify-content-center">
+          @if (!gameWon) {
+          <p-dropdown
+            [options]="userSelectableChampions"
+            [ngModel]="userChampionInput()"
+            (ngModelChange)="userChampionInput.set($event)"
+            optionLabel="name"
+            [filter]="true"
+            filterBy="name"
+            [showClear]="true"
+            placeholder="Select a Champion"
           >
-            <div class="card">Champion</div>
-            <div class="card" *ngFor="let column of tableColumnsMapped">
-              {{ column.fieldName }}
-            </div>
-          </div>
-
-          <div *ngIf="userIncorrectChampions.length">
-            <div
-              class="answer-container"
-              *ngFor="let champion of userIncorrectChampions"
-              [@answerChange]="userIncorrectChampions"
-            >
-              <div class="card">
+            <ng-template let-champion pTemplate="item">
+              <div class="flex align-items-center gap-2">
                 <img
                   [src]="championService.imageUrlPrefix + champion.image.full"
                   [alt]="champion.name"
-                  style="width: 65px"
-                  [pTooltip]="champion.name"
+                  [class]="'mr-2'"
+                  style="width: 20px"
                 />
+                <div>{{ champion.name }}</div>
               </div>
-              <div
-                class="card"
-                *ngFor="let column of tableColumnsMapped"
-                [ngStyle]="{
-                  'background-color':
-                    champion
-                    | championCompare : currentChampion : column.dataKey
-                }"
-              >
-                <span>{{ champion[column.dataKey] }}</span>
-              </div>
-            </div>
-          </div>
+            </ng-template>
+          </p-dropdown>
+          }
         </div>
+
+        @if (userIncorrectChampions.length) {
+        <div class="answer-container header">
+          <div class="card">Champion</div>
+          @for (column of tableColumnsMapped; track $index) {
+          <div class="card">
+            {{ column.fieldName }}
+          </div>
+          }
+        </div>
+
+        @for (champion of userIncorrectChampions; track $index) {
+        <div
+          class="answer-container"
+          [@answerChange]="userIncorrectChampions"
+          [@.disabled]="gameWon"
+        >
+          <div class="card">
+            <img
+              [src]="championService.imageUrlPrefix + champion.image.full"
+              [alt]="champion.name"
+              style="width: 65px"
+              [pTooltip]="champion.name"
+            />
+          </div>
+          @for (column of tableColumnsMapped; track $index) {
+          <div
+            class="card"
+            [ngStyle]="{
+              'background-color':
+                champion | championCompare : currentChampion : column.dataKey
+            }"
+          >
+            <span>{{ champion[column.dataKey] }}</span>
+          </div>
+          }
+        </div>
+        } } }
       </p-card>
     </div>
   </div>

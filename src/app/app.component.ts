@@ -94,8 +94,6 @@ export class AppComponent {
         return;
       }
 
-      console.log(this.currentChampion);
-
       if (selectedChampion.id !== this.currentChampion?.id) {
         this.userIncorrectChampions.push(selectedChampion);
         this.userSelectableChampions = this.userSelectableChampions.filter(
@@ -105,12 +103,16 @@ export class AppComponent {
       }
       this.userIncorrectChampions.push(selectedChampion);
 
-      this.gameWon = true;
+      //Do not spoiler the player
+      setTimeout(() => {
+        this.gameWon = true;
+      }, 1000);
     });
   }
 
   public startGame() {
     this.currentChampion = this.championService.getRandomChampion();
+    console.log(this.currentChampion);
     this.userSelectableChampions = this.championService.championData;
   }
 
